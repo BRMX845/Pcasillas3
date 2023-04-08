@@ -7,8 +7,7 @@ from rest_framework.response import Response
 #importar serializadores y modelos
 from .models import Usuarios, Casilla, AlquilerCasillas,Departamento
 from .serializers import UsuariosSerializer, CasillaSerializer, AlquilerCasillasSerializer ,DepartamentoSerializer
-#
-from rest_framework.permissions import AllowAny
+#from rest_framework.permissions import AllowAny
 class DepartamentoList(APIView):
     #peticion get de la tabla Departamento
     def get(self, request):
