@@ -7,8 +7,10 @@ from rest_framework.response import Response
 #importar serializadores y modelos
 from .models import Usuarios, Casilla, AlquilerCasillas,Departamento
 from .serializers import UsuariosSerializer, CasillaSerializer, AlquilerCasillasSerializer ,DepartamentoSerializer
-#from rest_framework.permissions import AllowAny
+#para la autenticacion 
+from rest_framework.permissions import IsAuthenticated
 class DepartamentoList(APIView):
+    permission_classes = (IsAuthenticated,)
     #peticion get de la tabla Departamento
     def get(self, request):
         departamento = Departamento.objects.all()
@@ -23,6 +25,7 @@ class DepartamentoList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class UsuariosList(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         usuario = Usuarios.objects.all()
         serializer = UsuariosSerializer(usuario, many=True)
@@ -35,6 +38,7 @@ class UsuariosList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CasillaList(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         casillas = Casilla.objects.all()
         serializer = CasillaSerializer(casillas, many=True, context={'request': request})
@@ -47,6 +51,8 @@ class CasillaList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class AlquilerCasillasList(APIView):
+    #solitica el token de inicio de session
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         alquileres = AlquilerCasillas.objects.all()
         serializer = AlquilerCasillasSerializer(alquileres, many=True)
